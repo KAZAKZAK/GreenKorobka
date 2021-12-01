@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:include="layout :: page">
+<head>
+    <meta charset="UTF-8">
+    <title>Green box inc.</title>
+</head>
+<body>
+<div th:fragment="content">
+    <h3>These are your Green boxes</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Grow program name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${greenBoxes.size() > 0}" th:each="i : ${#numbers.sequence(0, greenBoxes.size()-1)}">
+            <td><p th:text="${greenBoxes[__${i}__].getId()}"></p></td>
+            <td><a th:href="@{${#httpServletRequest.requestURI} +'/'+ ${greenBoxes[__${i}__].id}}" th:text="${greenBoxes[__${i}__].name}"></a></td>
+            <td><a th:text="${growPrograms[__${i}__].getName()}" th:href="'/grow_programs/' + ${growPrograms[__${i}__].getId()}"></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{${#httpServletRequest.requestURI} + '/add'}">
+        <button>Add GreenBox</button>
+    </form>
+</div>
+</body>
+</html>

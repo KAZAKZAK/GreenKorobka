@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  app:
+    image: 'demo:latest'
+    build: app/
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=976431
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+    ports:
+      - 8080:8080
+
+  db:
+    build: db/
+    restart: always
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=976431
+    volumes:
+      - ./:/var/lib/pgsql/data
